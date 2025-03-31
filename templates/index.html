@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Sum App</title>
+</head>
+<body>
+    <h1>Sum Two Numbers</h1>
+    <form method="POST">
+        <input type="number" name="num1" step="any" >
+        <input type="number" name="num2" step="any" >
+        <button type="submit">Calculate</button>
+    </form>
+
+    {% if result is not none %}
+        <h2>Result: {{ result }}</h2>
+    {% endif %}
+</body>
+</html>
