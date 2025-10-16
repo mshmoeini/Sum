@@ -26,10 +26,9 @@ pytest -q
 
 # (Optional) Explore notebooks
 jupyter notebook notebooks/
+```
+## 📦 Data
 
-## 🚀 Data
-
-```bash
 Source: Scania CV AB (2016) APS dataset — operational data from heavy-truck air-pressure systems.
 Summary:
 
@@ -57,16 +56,14 @@ FN
 Total_cost=10×FP+500×FN
 
 Repository layout for datasets:
-
+```bash
 data/
 ├─ raw/              # Original CSVs — LFS tracked
 ├─ processed/        # Cleaned/preprocessed datasets — LFS tracked
 └─ house_processed/  # In-house artifacts (≤ 10 MB): features, models, reports
+```
 
-
-## 🚀 Notes
-
-```bash
+## Notes
 
 Large files (CSV, models >10MB) must be tracked with Git LFS.
 
@@ -74,9 +71,7 @@ Put any generated artifacts from scripts/notebooks under data/house_processed/.
 
 Avoid committing heavy files directly to Git history.
 
-## Modules
-
-```bash
+## 🧩 Modules
 
 All code lives under src/challenge/ as an installable package.
 
@@ -90,9 +85,7 @@ utils/	Configs, constants, paths, small helpers.
 
 Tests live in src/tests/ with slim placeholders to grow with the project.
 
-
-## How To Initialize
-
+## 🧰 How To Initialize
 ```bash
 # Clone repository
 git clone <your_repo_url>
@@ -110,8 +103,10 @@ pip install -r requirements.txt
 
 # Verify installation
 pytest -q
+```
+---
 
-## Workflow Overview
+## 🔄 Workflow Overview
 
 Ingest – Load & sanity-check CSVs (types, missingness, target balance).
 
@@ -127,7 +122,7 @@ Explain – Use SHAP/feature importance to interpret model behavior.
 
 Test – Grow src/tests/ to keep the pipeline robust and CI-friendly.
 
-## Continuous Integration
+## ✅ Continuous Integration
 
 GitHub Actions runs on each push/PR to:
 
@@ -139,7 +134,7 @@ Validate imports and basic pipeline execution
 
 Report build status (✅/❌) on PRs to keep main stable
 
-## Conventions
+## 📏 Conventions
 
 Python 3.10+
 
@@ -149,7 +144,7 @@ Small, focused commits with clear docstrings
 
 Track large datasets/models via Git LFS
 
-## Project Notes
+## 📚 Project Notes
 
 Cost-sensitive evaluation is central (high FN penalty vs FP).
 
