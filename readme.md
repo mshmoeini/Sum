@@ -43,16 +43,6 @@ Missing values marked as na
 Target column: class (1 = positive, 0 = negative)
 
 Official cost metric:
-
-Total_cost
-=
-10
-×
-FP
-+
-500
-×
-FN
 Total_cost=10×FP+500×FN
 
 Repository layout for datasets:
