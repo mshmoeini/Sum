@@ -1,14 +1,19 @@
-APS Failure Detection – Scania Trucks
+# APS Failure Detection — Scania Trucks (Challenge@Stellantis)
 
-This repository hosts the APS (Air Pressure System) Failure Detection project based on Scania Trucks data.
-The goal is to build a clean, modular, and reproducible machine learning codebase for fault detection and explainability in APS systems.
+This repository hosts the **APS (Air Pressure System) Failure Detection** project based on Scania Trucks data.  
+The goal is to build a **clean, modular, and reproducible ML codebase** for fault detection and explainability in APS systems.
 
-Goal
+---
 
-Ingest → Preprocess → Feature Engineering → Train → Evaluate → Explain
+## 🎯 Goal
+Ingest → Preprocess → Feature Engineering → Train → Evaluate → Explain  
 All within a minimal, Pythonic structure designed for collaborative development and CI/CD integration.
 
-Quickstart
+---
+
+## 🚀 Quickstart
+
+```bash
 # Create a virtual environment
 python -m venv .venv
 source .venv/bin/activate   # On Windows: .venv\Scripts\activate
@@ -19,110 +24,135 @@ pip install -r requirements.txt
 # Run tests to confirm setup
 pytest -q
 
-# (Optional) Explore the notebooks
+# (Optional) Explore notebooks
 jupyter notebook notebooks/
 
-Data
+## 🚀 Data
 
-The dataset comes from Scania CV AB (2016) and represents operational data from the Air Pressure System (APS) of heavy trucks.
+```bash
+Source: Scania CV AB (2016) APS dataset — operational data from heavy-truck air-pressure systems.
+Summary:
 
-60,000 training samples (59,000 negative, 1,000 positive)
+~60,000 training samples (≈59k negative, ≈1k positive)
 
-16,000 test samples
+~16,000 test samples
 
-171 anonymized numerical attributes (sensor counters and histograms)
+171 anonymized numeric attributes (sensor counters & histograms)
 
-Missing values represented as "na"
+Missing values marked as na
 
-Target column: class (pos = 1, neg = 0)
+Target column: class (1 = positive, 0 = negative)
 
-Official evaluation metric:
+Official cost metric:
 
-Total_cost = 10 × (False Positives) + 500 × (False Negatives)
+Total_cost
+=
+10
+×
+FP
++
+500
+×
+FN
+Total_cost=10×FP+500×FN
 
-
-Data folders are organized as follows:
+Repository layout for datasets:
 
 data/
-├─ raw/              # Original CSV files (LFS tracked)
-├─ processed/        # Cleaned or preprocessed datasets (LFS tracked)
-└─ house_processed/  # In-house generated results and model artifacts (≤10 MB)
+├─ raw/              # Original CSVs — LFS tracked
+├─ processed/        # Cleaned/preprocessed datasets — LFS tracked
+└─ house_processed/  # In-house artifacts (≤ 10 MB): features, models, reports
 
 
-Notes:
+## 🚀 Notes
 
-Large files are tracked via Git LFS.
+```bash
 
-Use data/house_processed/ for derived outputs created by scripts or notebooks.
+Large files (CSV, models >10MB) must be tracked with Git LFS.
 
-Avoid committing large datasets directly.
+Put any generated artifacts from scripts/notebooks under data/house_processed/.
 
-Modules
+Avoid committing heavy files directly to Git history.
 
-All code lives under /src/challenge/, structured as an installable and importable Python package.
+## Modules
+
+```bash
+
+All code lives under src/challenge/ as an installable package.
 
 Module	Purpose
-ingest/	Load Scania APS CSV data (aps_failure_training_set.csv, aps_failure_test_set.csv) and handle missing values.
-preprocess/	Cleaning, imputation, feature scaling, and train/test consistency.
-features/	Feature engineering (meta-features, ratios, PCA transformations).
-novelty/	Machine learning models (LogReg, RF, XGBoost, IsolationForest) and cost evaluation.
-visualize/	Utilities for EDA, PCA plots, confusion matrices, and feature importance.
-utils/	Shared helpers for configs, constants, and paths.
+ingest/	Load Scania APS CSVs (aps_failure_training_set.csv, aps_failure_test_set.csv) + missing-value handling.
+preprocess/	Cleaning, imputation, scaling, train/test schema consistency.
+features/	Feature engineering: meta-features, ratios, PCA transforms.
+novelty/	Models & scoring (LogReg, RF, XGBoost, IsolationForest) + cost evaluation utility.
+visualize/	EDA helpers: PCA plots, confusion matrices, feature importance.
+utils/	Configs, constants, paths, small helpers.
 
-Testing modules live under /src/tests/, with initial placeholders ready for extension.
+Tests live in src/tests/ with slim placeholders to grow with the project.
 
-How To Initialize
+
+## How To Initialize
+
+```bash
 # Clone repository
 git clone <your_repo_url>
 cd aps-failure-scania
 
-# Initialize Git LFS
+# Initialize Git LFS (once per machine)
 git lfs install
 
-# Pull large data files
+# (If needed) Pull large data files
 git lfs pull
 
-# Set up environment and dependencies
+# Set up environment & dependencies
 python -m venv .venv && source .venv/bin/activate
 pip install -r requirements.txt
 
-# Verify installation and run tests
+# Verify installation
 pytest -q
 
-Workflow Overview
+## Workflow Overview
 
-Ingest: Load and clean APS data from Scania CSV files.
+Ingest – Load & sanity-check CSVs (types, missingness, target balance).
 
-Preprocess: Handle missing values, scale features, manage class imbalance.
+Preprocess – Impute, scale, and align train/test schemas; manage class imbalance.
 
-Feature Engineering: Build derived statistical and PCA-based features.
+Feature Engineering – Derive statistical features & PCA components.
 
-Train: Fit models such as Logistic Regression, Random Forest, XGBoost, or Isolation Forest.
+Train – Train baseline & advanced models (LogReg, RF, XGBoost, IsolationForest).
 
-Evaluate: Compute Scania cost metric, confusion matrix, and precision/recall.
+Evaluate – Report Scania cost metric, confusion matrix, precision/recall.
 
-Explain: Apply SHAP or feature importance to interpret model behavior.
+Explain – Use SHAP/feature importance to interpret model behavior.
 
-Test: Add or expand tests in /src/tests/ for reliability and CI stability.
+Test – Grow src/tests/ to keep the pipeline robust and CI-friendly.
 
-Continuous Integration
+## Continuous Integration
 
-Each push or pull request triggers GitHub Actions (CI) which:
+GitHub Actions runs on each push/PR to:
 
-Installs dependencies
+Install dependencies
 
-Runs all tests automatically (pytest)
+Run tests (pytest)
 
-Validates imports and pipeline execution
+Validate imports and basic pipeline execution
 
-Reports build status with a success or failure badge under each PR
+Report build status (✅/❌) on PRs to keep main stable
 
-Conventions
+## Conventions
 
-Python ≥ 3.10
+Python 3.10+
 
-Keep notebooks minimal; main logic should reside under /src/
+Keep notebooks light; put core logic in src/
 
-Write clear docstrings and small, modular commits
+Small, focused commits with clear docstrings
 
-Large data files must be handled with Git LFS
+Track large datasets/models via Git LFS
+
+## Project Notes
+
+Cost-sensitive evaluation is central (high FN penalty vs FP).
+
+Class imbalance requires careful handling (resampling, class weights, threshold tuning).
+
+Keep house_processed/ artifacts small for easy CI and reviews.
